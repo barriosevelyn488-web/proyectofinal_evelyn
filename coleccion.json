@@ -1,0 +1,27 @@
+{
+    "libros": [
+        {
+            "id": 2,
+            "titulo": "el principito",
+            "autor": "dhfsj",
+            "genero": "nose",
+            "valoracion": "7"
+        },
+        {
+            "titulo": "mil años de soledad",
+            "autor": "claudia",
+            "genero": "drama",
+            "valoracion": "10"
+        }
+    ],
+    "peliculas": [
+        {
+            "id": 1,
+            "titulo": "titanic ",
+            "autor": "holaa",
+            "genero": "gracias",
+            "valoracion": "7"
+        }
+    ],
+    "musica": []
+}
