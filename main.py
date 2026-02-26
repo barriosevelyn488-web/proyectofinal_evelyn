@@ -14,8 +14,9 @@ def main():
         print("4. Editar un Elemento")
         print("5. Eliminar un Elemento")
         print("6. Ver Elementos por Categoría")
-        print("7. Guardar y Cargar Colección")
-        print("8. Salir")
+        print("7. buscar reporte por genero")
+        print("8. guardar y cargar")
+        print("9. salir del programa")
         print("===========================================")
         
         opcion = input("Selecciona una opción (1-8): ")
@@ -69,6 +70,12 @@ def main():
                 print("Opción no válida.")
 
         elif opcion == "7":
+             print("\n¿Qué categoría?\n1. Libros | 2. Películas | 3. Música")
+             sub = input("Selección: ")
+             cate = {"1": "libros", "2": "peliculas", "3": "musica"}
+             if sub in cate: gestor.reporta_porgenero(coleccion, cate[sub])
+
+        elif opcion == "8":
             print("\n1. Guardar | 2. Recargar")
             if input("Selección: ") == "1":
                 guardar_coleccion(coleccion)
@@ -77,7 +84,7 @@ def main():
                 coleccion = cargar_coleccion()
                 print("¡Memoria recargada!")
 
-        elif opcion == "8":
+        elif opcion == "9":
             print("Saliendo del Administrador de Colección...")
             break
 

@@ -9,4 +9,4 @@ def cargar_coleccion():
 
 def guardar_coleccion(coleccion):
     with open("coleccion.json", "w", encoding="utf-8") as archivo:
-        json.dump(coleccion, archivo, indent=4, ensure_ascii=False)
+        json.dump(coleccion, archivo, indent=4, ensure_ascii=False) #jas
