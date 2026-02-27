@@ -1,40 +1,55 @@
-from archivo_json import guardar_coleccion
+from archivo_json import guardar_coleccion, guardar_reporte
 
-#1
-def añadir_elemento(coleccion, categoria): 
-    print(f"\n--- Agregando a {categoria.upper()} ---")
+def añadir_elemento(coleccion, categoria):
+    print(f"\n--- Agregando a {categoria.upper()} ---") 
     
-    t = input ("Titulo").strip()
+    t = input("Título: ").strip()
     a = input("Autor/Artista: ").strip()
     g = input("Género: ").strip()
     v = input("Valoración: ").strip()
 
+    # Verificación de duplicados por título
     for e in coleccion[categoria]:
-        # Si el título es igual Y el autor también es igual...
-        if e['titulo'].lower() == t.lower() and e['autor'].lower() == a.lower():
-            print(f"\n¡ERROR! Ya existe '{t}' de ese mismo autor.")
-            return # Aquí sí es un duplicado real y se detiene
+        if e['titulo'].lower() == t.lower():
+            print(f"\n¡ERROR! El título '{t}' ya existe en {categoria}.")
+            return 
+
     nuevo = {
         "titulo": t,
         "autor": a,
         "genero": g,
         "valoracion": v
-    } 
-    coleccion[categoria].append(nuevo)
-    guardar_coleccion(coleccion)
+    }
+    
+    coleccion[categoria].append(nuevo) 
+    guardar_coleccion(coleccion) 
     print("¡Guardado exitosamente!")
 
-#2
 def ver_todo(coleccion):
-    print("\n" + "="*45)
-    print("       VISTA GENERAL DE LA COLECCIÓN")
-    print("="*45)
-    for cat, lista in coleccion.items():
-        print(f"\n>>> {cat.upper()}")
-        for e in lista:
-            print(f" - {e['titulo']}")
+    print("\n" + "="*45) 
+    print("        VISTA GENERAL DE LA COLECCIÓN")
+    print("="*45) 
+    for cat, lista in coleccion.items(): 
+        print(f"\n>>> {cat.upper()} ({len(lista)} elementos)") 
+        for e in lista: 
+              print(f" - {e['titulo']} ({e['genero']})") 
 
-#3
+def ver_por_categoria(coleccion, categoria):
+    print(f"\n===========================================")
+    print(f"    LISTADO DETALLADO DE: {categoria.upper()}")
+    print("===========================================")
+    
+    lista = coleccion.get(categoria, [])
+    if not lista:
+        print(f"La sección de {categoria} está vacía.")
+    else:
+        for i, elemento in enumerate(lista, 1):
+            print(f"{i}. TÍTULO:    {elemento['titulo']}")
+            print(f"   AUTOR:     {elemento['autor']}")
+            print(f"   GÉNERO:    {elemento['genero']}")
+            print(f"   VALORACIÓN: {elemento['valoracion']}")
+            print("-" * 30)
+
 def buscar_universal(coleccion, campo):
     valor = input(f"\nBuscar {campo}: ").lower().strip()
     encontrado = False
@@ -45,7 +60,6 @@ def buscar_universal(coleccion, campo):
                 encontrado = True
     if not encontrado: print("No hay coincidencias.")
 
-#4
 def editar_elemento(coleccion, categoria, campo):
     lista = coleccion[categoria]
     if not lista: return print("\nCategoría vacía.")
@@ -59,7 +73,6 @@ def editar_elemento(coleccion, categoria, campo):
             print("¡Actualizado!")
     except: print("Error en el ingreso.")
 
-#5
 def eliminar_elemento(coleccion, categoria):
     lista = coleccion[categoria]
     if not lista: return
@@ -72,36 +85,34 @@ def eliminar_elemento(coleccion, categoria):
             print("Eliminado.")
     except: print("Error.")
 
-#6
-def ver_por_categoria(coleccion, categoria):
-    """Esta es la función de la Opción 6"""
-    print(f"\n===========================================")
-    print(f"    LISTADO DETALLADO DE: {categoria.upper()}")
+# --- FUNCIÓN 7: REPORTE POR GÉNERO (REQUISITO EXAMEN) ---
+def reporte_por_genero(coleccion):
+    print("\n===========================================")
+    print("      REPORTE DE TOTALES POR GÉNERO")
     print("===========================================")
     
-    lista = coleccion.get(categoria, [])
-    
-    if not lista:
-        print(f"La sección de {categoria} está vacía actualmente.")
+    # Diccionario de frecuencias: {"Género": cantidad}
+    conteo_generos = {}
+
+    # 1. Recorrer toda la colección (todas las categorías)
+    for categoria, lista in coleccion.items():
+        # 2. Recorrer cada elemento de la lista actual
+        for elemento in lista:
+            # Normalizamos el texto (sin espacios, primera letra mayúscula)
+            gen = elemento['genero'].strip().capitalize()
+            # 3. Lógica del contador
+            if gen in conteo_generos:
+                conteo_generos[gen] += 1
+            else:
+                conteo_generos[gen] = 1
+
+    # 4. Mostrar en pantalla
+    if not conteo_generos:
+        print("No hay datos suficientes para generar el reporte.")
     else:
-        # El ciclo recorre cada diccionario dentro de la lista de la categoría
-        for i, elemento in enumerate(lista, 1):
-            print(f"{i}. TÍTULO:    {elemento['titulo']}")
-            print(f"   AUTOR:     {elemento['autor']}")
-            print(f"   GÉNERO:    {elemento['genero']}")
-            print(f"   VALORACIÓN: {elemento['valoracion']}")
-            print("-" * 30)
-            
-            
-def reporta_porgenero(coleccion,categoria):
-
-    for cate, lista in coleccion.items():
-             print(f"\n>>> {cate.upper()} ({len(lista)} elementos)")
-             encontrado = True
-    if not encontrado: print("No hay coincidencias.")
-
-    for cate, lista in coleccion.items():
-       print(f"\n>>> {cate.upper()} ({len(lista)} elementos)")
-  #  for e in lista:
-         #  print(f" - {e['titulo']}")
-
+        for gen, cantidad in conteo_generos.items():
+            print(f"GÉNERO: {gen.ljust(15)} | TOTAL: {cantidad}")
+        
+        # 5. Guardar en reporte.json usando la función de archivo_json.py
+        guardar_reporte(conteo_generos)
+        print("\n[OK] Reporte exportado exitosamente a 'reporte.json'") #hasdjjajdjf

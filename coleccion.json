@@ -18,6 +18,12 @@
             "autor": "aidfh",
             "genero": "klasdkjfh",
             "valoracion": "7"
+        },
+        {
+            "titulo": "hoy",
+            "autor": "hoy",
+            "genero": "jsdghf",
+            "valoracion": "kajhdjf"
         }
     ],
     "peliculas": [
@@ -27,7 +33,26 @@
             "autor": "holaa",
             "genero": "gracias",
             "valoracion": "7"
+        },
+        {
+            "titulo": "kadhfj",
+            "autor": "kakdf",
+            "genero": "a,djkf",
+            "valoracion": "8"
         }
     ],
-    "musica": []
+    "musica": [
+        {
+            "titulo": "holaa",
+            "autor": "12345",
+            "genero": "sjhdfj",
+            "valoracion": "9"
+        },
+        {
+            "titulo": "que tal",
+            "autor": "djhfj",
+            "genero": "drama",
+            "valoracion": "9"
+        }
+    ]
 }

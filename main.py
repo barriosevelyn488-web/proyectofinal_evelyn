@@ -1,10 +1,11 @@
-from archivo_json import cargar_coleccion, guardar_coleccion
-import gestion_coleccion as gestor
+from archivo_json import cargar_coleccion, guardar_coleccion 
+# Quitamos la carga de reporte aquí porque el reporte se genera desde gestion_coleccion
+import gestion_coleccion as gestor 
 
 def main():
-    coleccion = cargar_coleccion()
-
-    while True:
+    coleccion = cargar_coleccion() 
+    
+    while True: 
         print("\n===========================================")
         print("        Administrador de Colección")
         print("===========================================")
@@ -14,19 +15,20 @@ def main():
         print("4. Editar un Elemento")
         print("5. Eliminar un Elemento")
         print("6. Ver Elementos por Categoría")
-        print("7. buscar reporte por genero")
-        print("8. guardar y cargar")
-        print("9. salir del programa")
+        print("7. Generar Reporte de Géneros (Total)") # Nombre más claro
+        print("8. Guardar y Cargar Datos")
+        print("9. Salir")
         print("===========================================")
         
-        opcion = input("Selecciona una opción (1-8): ")
+        opcion = input("Selecciona una opción (1-9): ")
 
         if opcion == "1":
             print("\n¿Qué categoría?\n1. Libros | 2. Películas | 3. Música")
             sub = input("Selección: ")
             cats = {"1": "libros", "2": "peliculas", "3": "musica"}
-            if sub in cats: gestor.añadir_elemento(coleccion, cats[sub])
-
+            if sub in cats: 
+                gestor.añadir_elemento(coleccion, cats[sub])
+        
         elif opcion == "2":
             gestor.ver_todo(coleccion)
 
@@ -34,7 +36,8 @@ def main():
             print("\nBuscar por: 1. Título | 2. Autor | 3. Género")
             sub = input("Opción: ")
             campos = {"1": "titulo", "2": "autor", "3": "genero"}
-            if sub in campos: gestor.buscar_universal(coleccion, campos[sub])
+            if sub in campos: 
+                gestor.buscar_universal(coleccion, campos[sub])
 
         elif opcion == "4":
             print("\nCategoría: 1. Libros | 2. Películas | 3. Música")
@@ -51,33 +54,26 @@ def main():
             print("\nEliminar de: 1. Libros | 2. Películas | 3. Música")
             sub = input("Selección: ")
             cats = {"1": "libros", "2": "peliculas", "3": "musica"}
-            if sub in cats: gestor.eliminar_elemento(coleccion, cats[sub])
+            if sub in cats: 
+                gestor.eliminar_elemento(coleccion, cats[sub])
 
         elif opcion == "6":
-            # --- LÓGICA DE LA OPCIÓN 6 ---
             print("\n¿Qué categoría desea inspeccionar?")
             print("1. Libros\n2. Películas\n3. Música\n4. Regresar")
             sub = input("Selección: ")
-            
             cats = {"1": "libros", "2": "peliculas", "3": "musica"}
-            
             if sub in cats:
-                # Llama a la función que recorre la categoría elegida
                 gestor.ver_por_categoria(coleccion, cats[sub])
-            elif sub == "4":
-                continue
-            else:
-                print("Opción no válida.")
 
-        elif opcion == "7":
-             print("\n¿Qué categoría?\n1. Libros | 2. Películas | 3. Música")
-             sub = input("Selección: ")
-             cate = {"1": "libros", "2": "peliculas", "3": "musica"}
-             if sub in cate: gestor.reporta_porgenero(coleccion, cate[sub])
-
+        # --- CORRECCIÓN CLAVE: Opción 7 ---
+        elif opcion == "7": # Debe llevar COMILLAS porque input() devuelve texto
+            # Llamamos a la función que recorre TODO y guarda el reporte
+            gestor.reporte_por_genero(coleccion)
+        
         elif opcion == "8":
             print("\n1. Guardar | 2. Recargar")
-            if input("Selección: ") == "1":
+            sel = input("Selección: ")
+            if sel == "1":
                 guardar_coleccion(coleccion)
                 print("¡Disco actualizado!")
             else:
@@ -85,7 +81,8 @@ def main():
                 print("¡Memoria recargada!")
 
         elif opcion == "9":
-            print("Saliendo del Administrador de Colección...")
+            print("Saliendo del Administrador de Colección...")#jadhfjajkdhn
+        
             break
 
 if __name__ == "__main__":
